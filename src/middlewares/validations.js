@@ -23,10 +23,12 @@ const verifyPassword = (password) => {
 }
 };
 
-const verifyLoginReq = (email, password) => {
+const verifyLoginReq = (req, res, next) => {
+  const { email, password } = req.body;
   if (!email || !password) {
-    return { status: 400, message: 'Some required fields are missing' };
+   next({ name: 'ValidationError', message: 'Some required fields are missing' });
   }
+  next();
 };
 
   module.exports = {
