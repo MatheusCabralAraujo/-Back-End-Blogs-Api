@@ -1,10 +1,13 @@
 const authService = require('../services/auth.service');
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
-  
-  const token = await authService.validateCredentials({ email, password });
-  res.status(200).json({ token });
+  try { 
+    const token = await authService.validateCredentials({ email, password });
+    return res.status(200).json({ token });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const validateToken = async (req, _res, next) => {

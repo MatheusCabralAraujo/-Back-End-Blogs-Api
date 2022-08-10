@@ -25,8 +25,10 @@ const verifyPassword = (password) => {
 
 const verifyLoginReq = (req, res, next) => {
   const { email, password } = req.body;
+  console.log(req.body);
   if (!email || !password) {
    next({ name: 'ValidationError', message: 'Some required fields are missing' });
+   return;
   }
   next();
 };

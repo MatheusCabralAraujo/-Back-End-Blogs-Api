@@ -3,10 +3,10 @@ const errors = {
   NotFoundError: 404,
 };
 
-const errorHandlerMiddleware = ({ name, message }, _req, res, _next) => {
-  const status = errors[name];
-  if (!status) return res.sendStatus(500);
-  res.status(status).json({ message });
+const errorHandlerMiddleware = (error, _req, res, _next) => {
+  const status = errors.name;
+  if (!status) return res.status(500).send('Internal Server Error');
+  return res.status(status).json({ message: error.message });
 };
 
 module.exports = errorHandlerMiddleware;
