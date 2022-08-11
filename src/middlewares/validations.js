@@ -1,6 +1,6 @@
+const { User } = require('../database/models/index');
+
 const verifyName = (displayName) => {
-    if (displayName) return { status: 400, message: '"name" is required' };
-  
     if (displayName.length < 8) {
       return { status: 400, message: '"displayName" length must be at least 8 characters long' };
     }
@@ -23,6 +23,16 @@ const verifyPassword = (password) => {
 }
 };
 
+const verifyExistingUser = async (req, res, next) => {
+  const { email } = req.body;
+  const locateUser = await User.findOne({ where: { email } });
+  if (locateUser) {
+    next({ name: 'Conflict', message: 'User already registered' });
+    return;
+  }
+  next();
+};
+
 const verifyLoginReq = (req, res, next) => {
   const { email, password } = req.body;
   console.log(req.body);
@@ -38,4 +48,5 @@ const verifyLoginReq = (req, res, next) => {
     verifyEmail,
     verifyPassword,
     verifyLoginReq,
+    verifyExistingUser,
   };

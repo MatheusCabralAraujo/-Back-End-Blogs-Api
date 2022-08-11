@@ -6,7 +6,7 @@ const getAll = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const result = await userService.login(req.body);
+  const result = await userService.createUser(req.body);
   return res.status(200).json(result);
 };
 

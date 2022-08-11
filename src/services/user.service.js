@@ -1,24 +1,30 @@
 const { User } = require('../database/models/index');
 const { verifyEmail, verifyPassword } = require('../middlewares/validations');
-const passwordHash = require('./password.service');
 
 const getAll = async () => {
   const result = await User.findAll();
   return result;
 };
 
-const login = async (email, password) => {
-  const validateEmail = verifyEmail(email);
-  const validatePassword = verifyPassword(password);
-  const passwordEncryp = passwordHash.encryptPassword(password);
-  if (validateEmail && validatePassword) {
-    const result = await User.create({ email, passwordEncryp });
-  return result;
+const createUser = async (data) => {
+  const validateEmail = verifyEmail(data.email);
+  const validatePassword = verifyPassword(data.password);
+  
+  if (validateEmail) {
+    const e = new Error(validateEmail.message);
+    e.code = validateEmail.status;
+    throw e;
   } 
-    return console.log('error');
+  if (validatePassword) {
+    const e = new Error(validatePassword.message);
+    e.code = validatePassword.status;
+    throw e;
+  }
+  const newUser = await User.create({ data });
+  return newUser;
 };
 
 module.exports = {
   getAll,
-  login,
+  createUser,
 };

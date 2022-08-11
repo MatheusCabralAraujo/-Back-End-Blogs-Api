@@ -1,6 +1,7 @@
 const errors = {
   ValidationError: 400,
   NotFoundError: 404,
+  Conflict: 409,
 };
 
 const errorHandlerMiddleware = (error, _req, res, _next) => {
