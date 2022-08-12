@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 // ...
-app.use('/users', usersRouter);
+app.use('/user', usersRouter);
 app.use('/login', authRouter);
 // app.use(authController.validateToken);
 app.use(errorHandler);

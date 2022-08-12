@@ -3,6 +3,7 @@ const { verifyEmail, verifyPassword } = require('../middlewares/validations');
 
 const getAll = async () => {
   const result = await User.findAll();
+  console.log(result);
   return result;
 };
 
@@ -20,7 +21,8 @@ const createUser = async (data) => {
     e.code = validatePassword.status;
     throw e;
   }
-  const newUser = await User.create({ data });
+  const newUser = await User.create(data);
+  console.log(newUser);
   return newUser;
 };
 
