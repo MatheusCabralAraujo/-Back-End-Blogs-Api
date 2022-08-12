@@ -1,5 +1,6 @@
 const { User } = require('../database/models/index');
 const { verifyEmail, verifyPassword } = require('../middlewares/validations');
+const { createToken } = require('./jwt.service');
 
 const getAll = async () => {
   const result = await User.findAll();
@@ -22,8 +23,8 @@ const createUser = async (data) => {
     throw e;
   }
   const newUser = await User.create(data);
-  console.log(newUser);
-  return newUser;
+  const newToken = createToken(newUser);
+  return newToken;
 };
 
 module.exports = {

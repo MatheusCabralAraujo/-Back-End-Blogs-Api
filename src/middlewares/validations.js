@@ -37,7 +37,6 @@ const verifyExistingUser = async (req, res, next) => {
 
 const verifyLoginReq = (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body);
   if (!email || !password) {
    next({ name: 'ValidationError', message: 'Some required fields are missing' });
    return;
@@ -45,26 +44,22 @@ const verifyLoginReq = (req, res, next) => {
   next();
 };
 
-const validateToken = (token) => {
-  try {
-    const { data } = jwt.verify(token, process.env.JWT_SECRET);
-    return data;
-  } catch (_err) {
-    const e = new Error('Expired or invalid token');
-    e.name = 'Unauthorized';
-    throw e;
+const validateToken = (req, _res, next) => {
+  const { authorization } = req.headers;
+  const validation = jwt.verify(authorization, process.env.JWT_SECRET);
+  if (!validation) {
+    next({ name: 'Unauthorized', message: 'Expired or invalid token' });
+    return;
   }
+   next();
 };
 
 const verifyToken = async (req, _res, next) => {
   const { authorization } = req.headers;
   if (!authorization) {
-    const e = new Error('Token not found');
-    e.name = 'Unauthorized';
-    throw e;
+    next({ name: 'Unauthorized', message: 'Token not found' });
+    return;
   }
-  const user = validateToken(authorization);
-  req.user = user;
   next();
 };
 
@@ -75,4 +70,5 @@ const verifyToken = async (req, _res, next) => {
     verifyLoginReq,
     verifyExistingUser,
     verifyToken,
+    validateToken,
   };
