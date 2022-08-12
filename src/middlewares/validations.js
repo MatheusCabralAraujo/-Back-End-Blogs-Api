@@ -1,3 +1,5 @@
+require('dotenv/config');
+const jwt = require('jsonwebtoken');
 const { User } = require('../database/models/index');
 
 const verifyName = (displayName) => {
@@ -43,10 +45,34 @@ const verifyLoginReq = (req, res, next) => {
   next();
 };
 
+const validateToken = (token) => {
+  try {
+    const { data } = jwt.verify(token, process.env.JWT_SECRET);
+    return data;
+  } catch (_err) {
+    const e = new Error('Expired or invalid token');
+    e.name = 'Unauthorized';
+    throw e;
+  }
+};
+
+const verifyToken = async (req, _res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    const e = new Error('Token not found');
+    e.name = 'Unauthorized';
+    throw e;
+  }
+  const user = validateToken(authorization);
+  req.user = user;
+  next();
+};
+
   module.exports = {
     verifyName,
     verifyEmail,
     verifyPassword,
     verifyLoginReq,
     verifyExistingUser,
+    verifyToken,
   };
