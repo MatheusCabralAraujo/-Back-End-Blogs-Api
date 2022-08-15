@@ -34,4 +34,4 @@ const createPostCategory = (sequelize, DataTypes) => {
   return PostCategory;
 };
 
-module.exports = createPostCategoriesModel; 
+module.exports = createPostCategory; 

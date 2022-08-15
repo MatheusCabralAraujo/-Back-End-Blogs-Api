@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const categoryController = require('../controllers/category.controller');
-const { verifyToken, validateToken } = require('../middlewares/validations');
+const { verifyToken } = require('../middlewares/jwtValidation');
 
-router.get('/', verifyToken, validateToken, categoryController.getAll);
-router.post('/', verifyToken, validateToken, categoryController.createCategory);
+router.get('/', verifyToken, categoryController.getAll);
+router.post('/', verifyToken, categoryController.createCategory);
