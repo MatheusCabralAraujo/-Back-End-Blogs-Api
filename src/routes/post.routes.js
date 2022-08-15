@@ -1,0 +1,9 @@
+const router = require('express').Router();
+const postController = require('../controllers/post.controller');
+const { verifyToken } = require('../middlewares/jwtValidation');
+const { validatePost } = require('../middlewares/post.validations');
+
+router.get('/', verifyToken, postController.getAllPosts);
+router.post('/', verifyToken, validatePost, postController.createPost);
+
+module.exports = router;
