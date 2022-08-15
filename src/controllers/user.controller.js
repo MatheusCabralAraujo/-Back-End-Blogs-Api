@@ -15,7 +15,7 @@ const getById = async (req, res) => {
 
 const createUser = async (req, res) => {
   const result = await userService.createUser(req.body);
-  return res.status(200).json(result);
+  return res.status(201).json({ token: result });
 };
 
 module.exports = {

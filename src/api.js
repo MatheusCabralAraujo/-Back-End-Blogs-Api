@@ -1,4 +1,5 @@
 const express = require('express');
+require('express-async-errors');
 const usersRouter = require('./routes/user.routes');
 const authRouter = require('./routes/auth.routes');
 const categoryRouter = require('./routes/category.routes');

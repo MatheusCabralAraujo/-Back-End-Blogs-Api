@@ -3,7 +3,9 @@ const { User } = require('../database/models/index');
 
 const verifyName = (displayName) => {
     if (displayName.length < 8) {
-      return { status: 400, message: '"displayName" length must be at least 8 characters long' };
+      const e = new Error('"displayName" length must be at least 8 characters long');
+      e.name = 'ValidationError';
+      throw e;
     }
   };
   
@@ -11,27 +13,32 @@ const verifyEmail = (email) => {
   const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
   const verification = emailRegex.test(email);
   if (!email) {
-    return { status: 400, message: '"email" is required' };
+    const e = new Error('"email" is required');
+    e.name = 'ValidationError';
+    throw e;
   }
   if (!verification) {
-    return { status: 400, message: '"email" must be a valid email' };
+    const e = new Error('"email" must be a valid email'); 
+    e.name = 'ValidationError';
+    throw e;
   }
 };
 
 const verifyPassword = (password) => {
-  if (password.length < 5) {
-    return { status: 400, message: '"password" length must be at least 6 characters long' };
+  if (password.length < 6) {
+    const e = new Error('"password" length must be at least 6 characters long');
+    e.name = 'ValidationError';
+    throw e;
 }
 };
 
-const verifyExistingUser = async (req, res, next) => {
-  const { email } = req.body;
+const verifyExistingUser = async (email) => {
   const locateUser = await User.findOne({ where: { email } });
   if (locateUser) {
-    next({ name: 'Conflict', message: 'User already registered' });
-    return;
+    const e = new Error('User already registered');
+    e.name = 'Conflict';
+    throw e;
   }
-  next();
 };
 
 const verifyLoginReq = (req, res, next) => {
