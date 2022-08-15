@@ -44,8 +44,9 @@ const createPost = async ({ title, content, categoryIds, userId }) => {
     published: Date.now(),
     updated: Date.now(),
   });
-  categoryIds.map(async (categoryId) => {} );
-  await PostCategory.bulkCreate([{ postId: post.id, categoryId }])
+  categoryIds.forEach(async (categoryId) => 
+  PostCategory.bulkCreate([{ postId: post.id, categoryId }]));
+  
   return post;
 };
 
