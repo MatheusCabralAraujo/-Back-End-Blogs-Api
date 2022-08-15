@@ -4,6 +4,7 @@ const { verifyToken } = require('../middlewares/jwtValidation');
 const { validatePost } = require('../middlewares/post.validations');
 
 router.get('/', verifyToken, postController.getAllPosts);
+router.get('/:id', verifyToken, postController.getPostById);
 router.post('/', verifyToken, validatePost, postController.createPost);
 
 module.exports = router;
