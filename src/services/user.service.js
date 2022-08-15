@@ -8,6 +8,11 @@ const getAll = async () => {
   return result;
 };
 
+const getById = async (id, email) => {
+  const user = await User.findOne({ where: { id, email } });
+  return user;
+};
+
 const createUser = async (data) => {
   const validateEmail = verifyEmail(data.email);
   const validatePassword = verifyPassword(data.password);
@@ -29,5 +34,6 @@ const createUser = async (data) => {
 
 module.exports = {
   getAll,
+  getById,
   createUser,
 };
