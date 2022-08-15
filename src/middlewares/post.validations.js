@@ -1,15 +1,19 @@
-const validatePost = (req, res, next) => {
-  const { title, content, categoryIds } = req.body;
+const validatePost = (title, content, categoryIds) => {
   if (!title) {
-    return res.status(400).json({ message: 'Some required fields are missing' });
+    const e = new Error('"name" is required');
+    e.name = 'ValidationError';
+    throw e;
   }
   if (!content) {
-    return res.status(400).json({ message: 'Some required fields are missing' });
+    const e = new Error('Some required fields are missing');
+    e.name = 'ValidationError';
+    throw e;
   }
   if (!categoryIds) {
-    return res.status(400).json({ message: '"categoryIds" not found' });
+    const e = new Error('"categoryIds" not found');
+    e.name = 'ValidationError';
+    throw e;
   }
-  next();
 };
 
 module.exports = {

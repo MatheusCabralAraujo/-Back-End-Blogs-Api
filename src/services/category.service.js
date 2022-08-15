@@ -6,14 +6,9 @@ const getAll = async () => {
   return result;
 };
 
-const createCategory = async (data) => {
-  const validName = verifyCategoryName(data.name);
-  if (validName) {
-    const e = new Error(validName.message);
-    e.code = validName.status;
-    throw e;
-  }
-  const newCategory = await Category.create(data);
+const createCategory = async ({ name }) => {
+  verifyCategoryName({ name });
+  const newCategory = await Category.create({ name });
   return newCategory;
 };
 

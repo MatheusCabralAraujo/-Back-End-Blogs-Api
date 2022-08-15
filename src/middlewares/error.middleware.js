@@ -8,7 +8,7 @@ const errors = {
 const errorHandlerMiddleware = (error, _req, res, _next) => {
   const { name } = error;
   const status = errors[name];
-  if (!status) return res.status(500).send('Internal Server Error');
+  if (!status) return res.status(500).json({ message: error.message });
   return res.status(status).json({ message: error.message });
 };
 

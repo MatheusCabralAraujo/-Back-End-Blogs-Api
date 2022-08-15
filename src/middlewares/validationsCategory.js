@@ -1,6 +1,8 @@
-const verifyCategoryName = (name) => {
+const verifyCategoryName = ({ name }) => {
   if (!name) {
-    return { status: 400, message: '"name" is required' };
+    const e = new Error('"name" is required');
+    e.name = 'ValidationError';
+    throw e;
   }
   };
 
