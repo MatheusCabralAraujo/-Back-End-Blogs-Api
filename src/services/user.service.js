@@ -4,7 +4,6 @@ const { createToken } = require('./jwt.service');
 
 const getAll = async () => {
   const result = await User.findAll();
-  console.log(result);
   return result;
 };
 
