@@ -55,4 +55,9 @@ const createPost = async ({ title, content, categoryIds, userId }) => {
   return post;
 };
 
-module.exports = { getAllPosts, getPostById, createPost };
+const deleteBlogPostsById = async (id) => {
+  const post = await getPostById(id);
+  return post.destroy({ where: { id: [id] } });  
+};
+
+module.exports = { getAllPosts, getPostById, createPost, deleteBlogPostsById };

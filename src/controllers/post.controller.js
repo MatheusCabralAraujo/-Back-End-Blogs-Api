@@ -35,5 +35,17 @@ const createPost = async (req, res) => {
       res.status(error.status || 500).json({ message: error.message });
     }
   };
+
+const deleteBlogPostsById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await postServices.deleteBlogPostsById(Number(id));
+    if (!result) {
+      return res.status(204).end();
+    }
+  } catch (_err) {
+    return res.status(404).json({ message: 'Post does not exist' });
+  }
+};
   
-  module.exports = { getAllPosts, getPostById, createPost };
+  module.exports = { getAllPosts, getPostById, createPost, deleteBlogPostsById };
