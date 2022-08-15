@@ -5,7 +5,7 @@ const User = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: DataTypes.INTEGER
     },
     displayName: DataTypes.STRING,
     email: DataTypes.STRING,

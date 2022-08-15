@@ -6,3 +6,5 @@ const { verifyToken } = require('../middlewares/jwtValidation');
 
 router.get('/', verifyToken, categoryController.getAll);
 router.post('/', verifyToken, categoryController.createCategory);
+
+module.exports = router;
