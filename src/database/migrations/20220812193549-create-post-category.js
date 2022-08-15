@@ -10,8 +10,8 @@ module.exports = {
           key: "id",
         },
         primaryKey: true,
-        onDelete: "cascade",
-        onUpdate: "cascade",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       categoryId: {
         type: Sequelize.INTEGER,
@@ -21,8 +21,8 @@ module.exports = {
           key: "id",
         },
         primaryKey: true,
-        onDelete: "cascade",
-        onUpdate: "cascade",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
     });
   },

@@ -3,7 +3,9 @@ const { verifyEmail, verifyPassword } = require('../middlewares/validations');
 const { createToken } = require('./jwt.service');
 
 const getAll = async () => {
-  const result = await User.findAll();
+  const result = await User.findAll({ attributes: {
+    exclude: ['password'],
+  } });
   return result;
 };
 

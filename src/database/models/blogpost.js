@@ -12,7 +12,8 @@ const BlogPost = (sequelize, DataTypes ) => {
     userId: DataTypes.INTEGER, 
   }, 
   {
-    timestamps: false,
+    createdAt: 'published',
+    updatedAt: 'updated',
     tableName: 'BlogPosts',
   });
   BlogPost.associate = (models) => {
