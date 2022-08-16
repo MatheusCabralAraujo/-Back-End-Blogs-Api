@@ -16,6 +16,16 @@ const validatePost = (title, content, categoryIds) => {
   }
 };
 
+const verifyBeforeDestroy = (userId, postUserId) => {
+  console.log('VALIDACAO MIDDLEWARE', userId);
+  if (userId !== postUserId) {
+    const e = new Error('Unauthorized user');
+    e.name = 'Unauthorized';
+    throw e;
+  }
+};
+
 module.exports = {
   validatePost,
+  verifyBeforeDestroy,
 };

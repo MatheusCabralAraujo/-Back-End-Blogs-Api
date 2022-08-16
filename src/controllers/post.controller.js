@@ -49,10 +49,11 @@ const updatePost = async (req, res) => {
 };
 
 const deleteBlogPostsById = async (req, res) => {
+  const userId = req.user.id;
   try {
     const { id } = req.params;
-    const result = await postServices.deleteBlogPostsById(Number(id));
-    if (!result) {
+    const result = await postServices.deleteBlogPostsById(Number(id), userId);
+    if (result) {
       return res.status(204).end();
     }
   } catch (_err) {

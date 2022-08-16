@@ -1,5 +1,5 @@
 const { Category, User, BlogPost, PostCategory } = require('../database/models');
-const { validatePost } = require('../middlewares/post.validations');
+const { validatePost, verifyBeforeDestroy } = require('../middlewares/post.validations');
 
 const getAllPosts = async () => {
   const posts = await BlogPost.findAll({
@@ -58,8 +58,9 @@ const updatePost = async (id, title, content) => {
   return resultUpdated;
 };
 
-const deleteBlogPostsById = async (id) => {
+const deleteBlogPostsById = async (id, userId) => {
   const post = await getPostById(id);
+  verifyBeforeDestroy(userId, post.userId);
   return post.destroy({ where: { id: [id] } });  
 };
 
