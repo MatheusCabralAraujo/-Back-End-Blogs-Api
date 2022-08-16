@@ -3,7 +3,8 @@ const BlogPost = (sequelize, DataTypes ) => {
     id: { 
       type: DataTypes.INTEGER,
       primaryKey: true, 
-      allowNull: false
+      allowNull: false,
+      autoIncrements: true,
       },
     title: DataTypes.STRING,
     content: DataTypes.STRING,

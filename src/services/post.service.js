@@ -38,13 +38,8 @@ const createPost = async (req, userId) => {
     where: { id: categoryIds },
   });
   if (!category) return false;
-  const post = await BlogPost.create({
-    title,
-    content,
-    userId,
-    published: Date.now(),
-    updated: Date.now(),
-  });
+  const { dataValues } = await BlogPost.create({ title, content, userId });
+  await Promise.all(categoryIds.map((item) => PostCategory))
   categoryIds.forEach(async (categoryId) => {
   await PostCategory.create([{ postId: post.dataValues.id, categoryId }]); 
 });
