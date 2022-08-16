@@ -39,12 +39,9 @@ const createPost = async (req, userId) => {
   });
   if (!category) return false;
   const { dataValues } = await BlogPost.create({ title, content, userId });
-  await Promise.all(categoryIds.map((item) => PostCategory))
-  categoryIds.forEach(async (categoryId) => {
-  await PostCategory.create([{ postId: post.dataValues.id, categoryId }]); 
-});
-  
-  return post;
+  await Promise.all(categoryIds.map((item) => PostCategory
+  .create({ postId: dataValues.id, categoryId: item })));
+  return dataValues;
 };
 
 const updatePost = async (id, title, content) => {
