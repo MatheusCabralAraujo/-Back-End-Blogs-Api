@@ -4,7 +4,7 @@ const BlogPost = (sequelize, DataTypes ) => {
       type: DataTypes.INTEGER,
       primaryKey: true, 
       allowNull: false,
-      autoIncrements: true,
+      autoIncrement: true,
       },
     title: DataTypes.STRING,
     content: DataTypes.STRING,

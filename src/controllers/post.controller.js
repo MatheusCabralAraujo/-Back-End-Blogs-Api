@@ -26,8 +26,8 @@ const getPostById = async (req, res) => {
 const createPost = async (req, res) => {
   const token = req.headers.authorization;
   const user = jwt.decode(token);
-  
-  const post = await postServices.createPost(req, user.id);
+  console.log(user);
+  const post = await postServices.createPost(req, user.data.id);
   
   if (!post) return res.status(400).json({ message: '"categoryIds" not found' });
   

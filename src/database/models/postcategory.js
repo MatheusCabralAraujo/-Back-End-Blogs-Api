@@ -3,7 +3,6 @@ const createPostCategory = (sequelize, DataTypes) => {
     postId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrements:true
     },
     categoryId: {
       type: DataTypes.INTEGER,
