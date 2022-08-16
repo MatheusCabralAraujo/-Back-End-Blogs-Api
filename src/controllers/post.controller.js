@@ -23,17 +23,13 @@ const getPostById = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-    try {
       const postBody = { ...req.body, userId: req.user.id };
   
       const post = await postServices.createPost(postBody);
   
       if (!post) return res.status(400).json({ message: '"categoryIds" not found' });
   
-      res.status(201).json(post);
-    } catch (error) {
-      res.status(error.status || 500).json({ message: error.message });
-    }
+      return res.status(201).json(post);
   };
 
 const deleteBlogPostsById = async (req, res) => {

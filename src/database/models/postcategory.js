@@ -24,7 +24,7 @@ const createPostCategory = (sequelize, DataTypes) => {
       through: PostCategory,
       otherKey: 'categoryId',
       foreignKey: 'postId',
-      as: 'category' 
+      as: 'categories' 
     })
   }
 
