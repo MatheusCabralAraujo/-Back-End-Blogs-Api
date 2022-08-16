@@ -17,7 +17,7 @@ const validatePost = (title, content, categoryIds) => {
 };
 
 const verifyBeforeDestroy = (userId, postUserId) => {
-  console.log('VALIDACAO MIDDLEWARE', userId);
+  console.log('VALIDACAO MIDDLEWARE', 'USERID:', userId, 'POSTUSER:', postUserId);
   if (userId !== postUserId) {
     const e = new Error('Unauthorized user');
     e.name = 'Unauthorized';
