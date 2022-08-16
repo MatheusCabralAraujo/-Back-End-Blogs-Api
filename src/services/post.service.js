@@ -52,7 +52,12 @@ const updatePost = async (id, title, content) => {
 
 const deleteBlogPostsById = async (id, userId) => {
   const post = await getPostById(id);
-  verifyBeforeDestroy(userId, post.userId);
+  if (!post) {
+    const e = new Error('Post does not exist');
+    e.name = 'NotFoundError';
+    throw e;
+  }
+  verifyBeforeDestroy(userId, post.dataValues.userId);
   return post.destroy({ where: { id: [id] } });  
 };
 

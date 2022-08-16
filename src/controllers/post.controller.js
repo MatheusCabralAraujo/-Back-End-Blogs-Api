@@ -48,16 +48,17 @@ const updatePost = async (req, res) => {
   return res.status(200).json(result);
 };
 
-const deleteBlogPostsById = async (req, res) => {
-  const userId = req.user.id;
+const deleteBlogPostsById = async (req, res, next) => {
+  const token = req.headers.authorization;
+  const user = jwt.decode(token);
   try {
     const { id } = req.params;
-    const result = await postServices.deleteBlogPostsById(Number(id), userId);
+    const result = await postServices.deleteBlogPostsById(Number(id), Number(user.data.id));
     if (result) {
       return res.status(204).end();
     }
-  } catch (_err) {
-    return res.status(404).json({ message: 'Post does not exist' });
+  } catch (err) {
+    next(err);
   }
 };
   
