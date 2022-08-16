@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const postServices = require('../services/post.service');
 
 const getAllPosts = async (_req, res) => {
@@ -23,20 +24,21 @@ const getPostById = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-      const postBody = { ...req.body, userId: req.user.id };
+  const token = req.headers.authorization;
+  const user = jwt.decode(token);
   
-      const post = await postServices.createPost(postBody);
+  const post = await postServices.createPost(req, user.id);
   
-      if (!post) return res.status(400).json({ message: '"categoryIds" not found' });
+  if (!post) return res.status(400).json({ message: '"categoryIds" not found' });
   
-      return res.status(201).json(post);
+  return res.status(201).json(post);
   };
 
 const updatePost = async (req, res) => {
   const userId = req.user.id;
   const { id } = req.params;
   const { title, content } = req.body;
-  const result = await postServices.updatePosts(Number(id), title, content);
+  const result = await postServices.updatePost(Number(id), title, content);
   if (!title || !content) {
     return res.status(400).json({ message: 'Some required fields are missing' });
   }

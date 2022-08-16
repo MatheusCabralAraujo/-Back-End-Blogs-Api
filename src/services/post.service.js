@@ -31,8 +31,9 @@ const getPostById = async (id) => {
   return post;
 };
 
-const createPost = async ({ title, content, categoryIds, userId }) => {
-  validatePost(title, content, categoryIds, userId);
+const createPost = async (req, userId) => {
+  const { title, content, categoryIds } = req.body;
+  validatePost(title, content, categoryIds);
   const category = await Category.findOne({
     where: { id: categoryIds },
   });
@@ -45,7 +46,7 @@ const createPost = async ({ title, content, categoryIds, userId }) => {
     updated: Date.now(),
   });
   categoryIds.forEach(async (categoryId) => {
-  await PostCategory.create([{ postId: post.id, categoryId }]); 
+  await PostCategory.create([{ postId: post.dataValues.id, categoryId }]); 
 });
   
   return post;

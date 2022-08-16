@@ -1,6 +1,6 @@
 const validatePost = (title, content, categoryIds) => {
   if (!title) {
-    const e = new Error('"name" is required');
+    const e = new Error('Some required fields are missing');
     e.name = 'ValidationError';
     throw e;
   }
