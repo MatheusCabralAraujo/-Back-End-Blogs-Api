@@ -32,6 +32,20 @@ const createPost = async (req, res) => {
       return res.status(201).json(post);
   };
 
+const updatePost = async (req, res) => {
+  const userId = req.user.id;
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const result = await postServices.updatePosts(Number(id), title, content);
+  if (!title || !content) {
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  }
+  if (userId !== result.user.id) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+  return res.status(200).json(result);
+};
+
 const deleteBlogPostsById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -44,4 +58,4 @@ const deleteBlogPostsById = async (req, res) => {
   }
 };
   
-  module.exports = { getAllPosts, getPostById, createPost, deleteBlogPostsById };
+  module.exports = { getAllPosts, getPostById, createPost, updatePost, deleteBlogPostsById };

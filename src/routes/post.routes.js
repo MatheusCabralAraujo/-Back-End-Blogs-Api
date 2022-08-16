@@ -6,6 +6,7 @@ const { validatePost } = require('../middlewares/post.validations');
 router.get('/', verifyToken, postController.getAllPosts);
 router.get('/:id', verifyToken, postController.getPostById);
 router.post('/', verifyToken, validatePost, postController.createPost);
+router.put('/:id', verifyToken, postController.updatePost);
 router.delete('/:id', verifyToken, postController.deleteBlogPostsById);
 
 module.exports = router;
